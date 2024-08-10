@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:pt_biis_griya_nadi/app/modules/user/controllers/user_controller.dart';
 
 class UserView extends GetView<UserController> {
@@ -11,14 +8,19 @@ class UserView extends GetView<UserController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('UserView'),
+        title: const Text(
+          'Lis Pengguna',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         } else if (controller.users.isEmpty) {
-          return const Center(child: Text('No users found.'));
+          return const Center(child: Text('Tidak ada data pengguna.'));
         } else {
           return ListView.builder(
             itemCount: controller.users.length,
@@ -27,7 +29,7 @@ class UserView extends GetView<UserController> {
               return Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Card(
-                  color: Colors.grey[800],
+                  color: Colors.grey[700],
                   child: ListTile(
                     title: Text(
                       'Nama : ${user.name}',
@@ -49,10 +51,11 @@ class UserView extends GetView<UserController> {
         }
       }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple[900],
         onPressed: () {
           Get.toNamed('/add-user');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

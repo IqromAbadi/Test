@@ -6,8 +6,6 @@ import '../modules/add_user/bindings/add_user_binding.dart';
 import '../modules/add_user/views/add_user_view.dart';
 import '../modules/cart/bindings/cart_binding.dart';
 import '../modules/cart/views/cart_view.dart';
-import '../modules/edit_produk/bindings/edit_produk_binding.dart';
-import '../modules/edit_produk/views/edit_produk_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/produk/bindings/produk_binding.dart';
@@ -52,11 +50,6 @@ class AppPages {
       name: _Paths.ADD_PRODUK,
       page: () => const AddProdukView(),
       binding: AddProdukBinding(),
-    ),
-    GetPage(
-      name: _Paths.EDIT_PRODUK,
-      page: () => const EditProdukView(),
-      binding: EditProdukBinding(),
     ),
   ];
 }
