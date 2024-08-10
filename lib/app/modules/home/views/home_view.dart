@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           children: [
@@ -28,54 +28,56 @@ class HomeView extends GetView<HomeController> {
               onTap: () {
                 Get.toNamed('/user');
               },
-              child: Container(
-                color: Colors.blue,
-                child: const Center(
-                  child: Text(
-                    'User',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/pengguna.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Pengguna',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
             GestureDetector(
               onTap: () {
                 Get.toNamed('/produk');
               },
-              child: Container(
-                color: Colors.green,
-                child: const Center(
-                  child: Text(
-                    'Product',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: const DecorationImage(
+                          image: AssetImage("assets/produk.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed('/cart');
-              },
-              child: Container(
-                color: Colors.orange,
-                child: const Center(
-                  child: Text(
-                    'Cart',
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Produk',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ],

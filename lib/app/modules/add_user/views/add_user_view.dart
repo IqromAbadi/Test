@@ -9,7 +9,12 @@ class AddUserView extends GetView<AddUserController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AddUserView'),
+        title: const Text(
+          'Tambah Pengguna',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -23,20 +28,27 @@ class AddUserView extends GetView<AddUserController> {
               ),
               TextField(
                 controller: controller.jobController,
-                decoration: const InputDecoration(labelText: 'Job'),
+                decoration: const InputDecoration(labelText: 'Pekerjaan'),
               ),
-              Obx(() => ElevatedButton(
-                    onPressed: controller.isLoading.value
-                        ? null
-                        : () {
-                            controller.addUser();
-                          },
-                    child: controller.isLoading.value
-                        ? CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text('Add User'),
-                  )),
+              const SizedBox(height: 15),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple[900],
+                  minimumSize: const Size(double.infinity, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {
+                  controller.addUser();
+                },
+                child: const Text(
+                  'Tambah Pengguna',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              )
             ],
           ),
         ),

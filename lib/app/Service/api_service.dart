@@ -1,15 +1,13 @@
 import 'dart:convert';
-
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:pt_biis_griya_nadi/app/models/produk_model.dart';
+import 'package:pt_biis_griya_nadi/app/models/food.dart';
 import 'package:pt_biis_griya_nadi/app/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
+//API REQRES.IN
 class ApiServiceReqresin {
   final String baseUrl = 'https://reqres.in/api';
 
-//POST USER DENGAN API REQRES.IN
+//POST
   Future<User?> postUser(String name, String job) async {
     try {
       final response = await http.post(
@@ -49,65 +47,62 @@ class ApiServiceReqresin {
   }
 }
 
+//API MOCKUP
 class ApiServiceMockup {
-  final String BaseUrl = 'https://66b62721b5ae2d11eb6614ac.mockapi.io';
+  final String _baseUrl = 'https://66b62721b5ae2d11eb6614ac.mockapi.io';
 
-  // POST PRODUK
-  Future<ProdukModel?> postProduk(String name, int harga) async {
+  // GET
+  Future<List<Food>?> getFood() async {
     try {
-      final response = await http.post(
-        Uri.parse('$BaseUrl/produk'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'name': name, 'harga': harga}),
-      );
+      final response = await http.get(Uri.parse('$_baseUrl/produk'));
 
-      if (response.statusCode == 201) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        return ProdukModel.fromJson(data);
+      if (response.statusCode == 200) {
+        Iterable it = jsonDecode(response.body);
+        List<Food> food = it.map((e) => Food.fromJson(e)).toList();
+        return food;
       } else {
-        print('Failed to post product. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('Failed to load data: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error posting product: $e');
+      print('Error fetching data: $e');
       return null;
     }
   }
 
-  // GET PRODUK
-  Future<List<ProdukModel>> getProduk() async {
+  // POST
+  Future<void> postFood(String name, int price) async {
     try {
-      final response = await http.get(Uri.parse('$BaseUrl/produk'));
+      final response = await http.post(
+        Uri.parse('$_baseUrl/produk'),
+        body: {
+          'name': name,
+          'price': price.toString(),
+        },
+      );
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        return data.map((produk) => ProdukModel.fromJson(produk)).toList();
+      if (response.statusCode == 201) {
+        print('Food added successfully');
       } else {
-        return [];
+        print('Failed to post data: ${response.statusCode}');
       }
     } catch (e) {
-      print(e.toString());
-      return [];
+      print('Error posting data: $e');
     }
   }
 
-  //DELETE PRODUK
-  Future<bool> deleteProduk(String id) async {
+// DELETE
+  Future<void> deleteFood(int id) async {
     try {
-      final response = await http.delete(Uri.parse('$BaseUrl/produk/$id'));
+      final response = await http.delete(Uri.parse('$_baseUrl/produk/$id'));
 
-      if (response.statusCode == 204) {
-        // Updated to check for 204 No Content
-        return true;
+      if (response.statusCode == 200) {
+        print('Food deleted successfully');
       } else {
-        print('Failed to delete product. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        return false;
+        print('Failed to delete data: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error deleting product: $e');
-      return false;
+      print('Error deleting data: $e');
     }
   }
 }
